@@ -126,7 +126,7 @@ Puis convertissez vos fichiers xml en csv à l'aide de ces commandes, adaptez le
 
 La conversion peut maintenant commencer:
 
-```plsql
+```sql
 # --columns => nom_des_colonnes contenues dans le fichier xml (voir image ci dessus)
 # --input => emplacement du dossier contenant les fichiers .xml téléchargés depuis https://ciqual.anses.fr/
 # --output => emplacement souhaité pour recevoir les fichiers .csv une fois la conversion achevée => Documents/Ciqual/ dans notre cas
