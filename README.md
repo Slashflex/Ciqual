@@ -126,27 +126,45 @@ Puis convertissez vos fichiers xml en csv à l'aide de ces commandes, adaptez le
 
 La conversion peut maintenant commencer:
 
-```sql
+```shell
 # --columns => nom_des_colonnes contenues dans le fichier xml (voir image ci dessus)
 # --input => emplacement du dossier contenant les fichiers .xml téléchargés depuis https://ciqual.anses.fr/
 # --output => emplacement souhaité pour recevoir les fichiers .csv une fois la conversion achevée => Documents/Ciqual/ dans notre cas
 # --item-name => nom des tags XML, TABLE => tag générique 'englobant' toutes les colonnes, ALIM => nom de la table
 
 # aliments.csv
-java -jar xml2csv-*.jar --columns alim_code,alim_nom_fr,alim_nom_index_fr,alim_nom_eng, alim_nom_index_eng,alim_grp_code,alim_ssgrp_code,alim_ssssgrp_code --input ~/Documents/Ciqual/TableCiqual2017_XML_2017_11_21/alim_2017_11_21.xml --output ~/Documents/Ciqual/aliments.csv --item-name /TABLE/ALIM
+java -jar xml2csv-*.jar 
+--columns alim_code,alim_nom_fr,alim_nom_index_fr,alim_nom_eng, alim_nom_index_eng,alim_grp_code,alim_ssgrp_code,alim_ssssgrp_code 
+--input ~/Documents/Ciqual/TableCiqual2017_XML_2017_11_21/alim_2017_11_21.xml 
+--output ~/Documents/Ciqual/aliments.csv --item-name /TABLE/ALIM
 
 # groupes_aliments.csv
-java -jar xml2csv-*.jar --columns alim_grp_code,alim_grp_nom_fr,alim_grp_nom_eng,alim_ssgrp_code,alim_ssgrp_nom_fr,
-alim_ssgrp_nom_eng,alim_ssssgrp_code,alim_ssssgrp_nom_fr,alim_ssssgrp_nom_eng --input ~/Documents/Ciqual/TableCiqual2017_XML_2017_11_21/alim_grp_2017_11_21.xml --output ~/Documents/Ciqual/groupes_aliments.csv --item-name /TABLE/ALIM_GRP
+java -jar xml2csv-*.jar 
+--columns alim_grp_code,alim_grp_nom_fr,alim_grp_nom_eng,alim_ssgrp_code,alim_ssgrp_nom_fr,
+alim_ssgrp_nom_eng,alim_ssssgrp_code,alim_ssssgrp_nom_fr,alim_ssssgrp_nom_eng 
+--input ~/Documents/Ciqual/TableCiqual2017_XML_2017_11_21/alim_grp_2017_11_21.xml 
+--output ~/Documents/Ciqual/groupes_aliments.csv 
+--item-name /TABLE/ALIM_GRP
 
 # compositions.csv
-java -jar xml2csv-*.jar --columns alim_code,const_code,teneur,min,max,code_confiance,source_code --input ~/Documents/Ciqual/TableCiqual2017_XML_2017_11_21/compo_2017_11_21.xml --output ~/Documents/Ciqual/compositions.csv --item-name /TABLE/COMPO
+java -jar xml2csv-*.jar 
+--columns alim_code,const_code,teneur,min,max,code_confiance,source_code 
+--input ~/Documents/Ciqual/TableCiqual2017_XML_2017_11_21/compo_2017_11_21.xml 
+--output ~/Documents/Ciqual/compositions.csv 
+--item-name /TABLE/COMPO
 
 # constituants.csv
-java -jar xml2csv-*.jar --columns const_code,const_nom_fr,const_nom_eng --input ~/Documents/Ciqual/TableCiqual2017_XML_2017_11_21/const_2017_11_21.xml --output ~/Documents/Ciqual/constituants.csv --item-name /TABLE/CONST
+java -jar xml2csv-*.jar 
+--columns const_code,const_nom_fr,const_nom_eng 
+--input ~/Documents/Ciqual/TableCiqual2017_XML_2017_11_21/const_2017_11_21.xml 
+--output ~/Documents/Ciqual/constituants.csv 
+--item-name /TABLE/CONST
 
 # sources.csv
-java -jar xml2csv-*.jar --columns source_code,ref_citation --input ~/Documents/Ciqual/TableCiqual2017_XML_2017_11_21/sources_2017_11_21.xml --output ~/Documents/Ciqual/sources.csv --item-name /TABLE/SOURCES
+java -jar xml2csv-*.jar --columns source_code,ref_citation 
+--input ~/Documents/Ciqual/TableCiqual2017_XML_2017_11_21/sources_2017_11_21.xml 
+--output ~/Documents/Ciqual/sources.csv 
+--item-name /TABLE/SOURCES
 
 ```
 
@@ -161,7 +179,7 @@ Tout d'abord, créer une base de donnée du nom **ciqual**, une fois créee, eff
 
 Nous allons créer les 5 tables temporaires à l'aide de 5 requêtes. Il va falloir bien respecter l'ordre des colonnes et surtout le **type** auxquelles les données sont liées implicitement:
 
-```
+```TSQL
 -- Table aliments_temp
 CREATE TABLE aliments_temp(
    	alim_code INTEGER,
@@ -254,7 +272,7 @@ Nous pouvons maintenant finaliser l'insertion des données inclues dans nos 5 ta
 
 Toujours à l'aide de **Query Tools**, nous allons executer ce script
 
-```plsql
+```TSQL
 -- INSERTION DES DONNEES A PARTIR DES TABLES TEMPORAIRES
 
 -- Table sources
@@ -348,7 +366,7 @@ Voilà, toutes nos données sont correctement insérées.
 
 Créer une requête qui permet d'afficher une liste de valeurs avec une chaîne de caractères en paramètre. La list e permet de choisir un aliment. Il faut afficher le nom et les groupes des aliments pour aider au choix :
 
-```plsql
+```TSQL
 SELECT
   aliments.nom_index_fr AS nom_aliment,
   g1.idx_grp AS id_grp,
@@ -371,7 +389,7 @@ ILIKE '%Ban%';
 
 Créer une requete pour afficher toute la composition d'un aliment avec les teneurs en fonction du poids et de l'aliment indiqués dans la requête :	
 
-```plsql
+```TSQL
 -- Création d'une vue
 CREATE VIEW compo_const
 AS
@@ -411,7 +429,7 @@ Cette dernière commande nous retourne la teneur de chaque constituants pour un 
 
 Une dernière commande afin de concaténer dans une nouvelle colonne ```text``` les données contenues dans la table ```aliments``` et les noms du groupe, sous-groupe et sous-sous-groupe auquel cet ```aliment``` appartient :
 
-```plsql
+```TSQL
 SELECT CONCAT(aliments.nom_index_fr,  ' / ', g1.nom_fr, ' / ', g2.nom_fr, ' / ', g3.nom_fr) AS text
 FROM aliments
 	LEFT JOIN groupe_aliments AS g1 
