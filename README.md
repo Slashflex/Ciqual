@@ -37,7 +37,7 @@ Pour ce TP, il faut au préalable avoir installer:
 
 Se rendre sur [Ciqual](https://ciqual.anses.fr/) pour télécharger les fichiers :
 
-![Téléchargement format xml](/home/slashflex/Applications/CDA/Ciqual/img/ciqual_téléchargements.jpg)
+![Téléchargement format xml](https://github.com/Slashflex/Ciqual/blob/master/img/ciqual_t%C3%A9l%C3%A9chargements.jpg)
 
 <hr style="background-color: #cd763e">
 
@@ -89,7 +89,7 @@ Passons maintenant à la compilation de l'outil **xml2csv** :
 
   Vous devriez obtenir ce résultat en terminal :
 
-  ![Résultat compilation xml2csv](/home/slashflex/Applications/CDA/Ciqual/img/mvn package.png)
+  ![Résultat compilation xml2csv](https://github.com/Slashflex/Ciqual/blob/master/img/mvn%20package.png)
 
 Vous devrez également renommer le dossier et les fichiers téléchargés au format **XML** en veillant a ce que les espaces soient remplacés par des ```underscore``` *_* :
 
@@ -122,7 +122,7 @@ Puis convertissez vos fichiers xml en csv à l'aide de ces commandes, adaptez le
 
   - Exemple pour la table aliments
 
-  ![XML tags](/home/slashflex/Applications/CDA/Ciqual/img/xml.png)
+  ![XML tags](https://github.com/Slashflex/Ciqual/blob/master/img/xml.png)
 
 La conversion peut maintenant commencer:
 
@@ -249,13 +249,13 @@ Nos tables temporaires sont maintenant bien peuplées à partir des données con
 
 ## Réaliser un **M**odèle **C**onceptuel de **D**onnées (**MCD**) à l'aide de **pgModeler**<a name="chapter-4"></a>
 
-![Ciqual MCD](/home/slashflex/Applications/CDA/Ciqual/img/pgModeler_ciqual_dbm.png)
+![Ciqual MCD](https://github.com/Slashflex/Ciqual/blob/master/img/pgModeler_ciqual_dbm.png)
 
 Une fois le **M**odel **C**onceptuel de **D**onnées crée, nous pouvons maintenant l'exporter au format **SQL** en clickant sur le bouton **Export** dans le menu de gauche, une fenetre s'ouvre alors:
 
 - Cochez le bouton correspondant à Fichier **SQL** et sauvegardez votre fichier .sql à l'emplacement de votre choix
 
-![Exporter le MCD en .SQL](/home/slashflex/Applications/CDA/Ciqual/img/export_to_sql.png)
+![Exporter le MCD en .SQL](https://github.com/Slashflex/Ciqual/blob/master/img/export_to_sql.png)
 
 Nous pouvons ensuite importer notre script **SQL** fraichement créer dans **pgAdmin4** :
 
@@ -267,7 +267,7 @@ Nous pouvons ensuite importer notre script **SQL** fraichement créer dans **pgA
 
   - Cette fenêtre s'ouvre alors :
 
-    ![](/home/slashflex/Applications/CDA/Ciqual/img/import_sql.png)
+    ![](https://github.com/Slashflex/Ciqual/blob/master/img/import_sql.png)
 
     Veillez bien a selectionner le format **SQL**, puis clicker sur **Select**.
 
