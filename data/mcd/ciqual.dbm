@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.2" last-position="296,0" last-zoom="1.35" max-obj-count="7"
+	 default-schema="public" default-owner="postgres">
+<database name="alimentation" is-template="false" allow-conns="true">
+</database>
+
+<schema name="public" layer="0" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<table name="aliments" layer="0" collapse-mode="2" max-obj-count="7">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1120" y="60"/>
+	<column name="idx_ali" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="nom_fr">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="nom_index_fr">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="nom_eng">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="nom_index_eng">
+		<type name="varchar" length="255"/>
+	</column>
+	<constraint name="alim_pk" type="pk-constr" table="public.aliments">
+		<columns names="idx_ali" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="idx_grp_groupe_aliments" index="5"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="groupe_aliments_fk" index="1"/>
+	</customidxs>
+</table>
+
+<table name="groupe_aliments" layer="0" collapse-mode="2" max-obj-count="4">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1120" y="440"/>
+	<column name="idx_grp" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="nom_fr">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="nom_eng">
+		<type name="varchar" length="0"/>
+	</column>
+	<constraint name="alim_grp_pk" type="pk-constr" table="public.groupe_aliments">
+		<columns names="idx_grp" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="idx_grp_groupe_aliments" index="3"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="groupe_aliments_fk" index="1"/>
+	</customidxs>
+</table>
+
+<table name="constituants" layer="0" collapse-mode="2" max-obj-count="3">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="260" y="100"/>
+	<column name="idx_cst" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="nom_fr">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="nom_eng">
+		<type name="varchar" length="255"/>
+	</column>
+	<constraint name="pk_constituants" type="pk-constr" table="public.constituants">
+		<columns names="idx_cst" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="sources" layer="0" collapse-mode="2" max-obj-count="3">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="260" y="380"/>
+	<column name="idx_src" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="code">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="citation">
+		<type name="text" length="0"/>
+	</column>
+	<constraint name="pk_sources" type="pk-constr" table="public.sources">
+		<columns names="idx_src" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="gra_ali" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#fc1d6a"
+	 src-table="public.groupe_aliments"
+	 dst-table="public.aliments"
+	 src-required="false" dst-required="false">
+	<label ref-type="name-label">
+		<position x="-84.551" y="-5.85068"/>
+	</label>
+</relationship>
+
+<relationship name="gra_gra" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#1b1333"
+	 src-table="public.groupe_aliments"
+	 dst-table="public.groupe_aliments"
+	 src-required="false" dst-required="false">
+	<line>
+		<position x="1429.04" y="488.617"/>
+	<position x="1429.04" y="429"/>
+	<position x="1318.69" y="429"/>
+	</line>
+	<label ref-type="name-label">
+		<position x="0.261701" y="5.85"/>
+	</label>
+</relationship>
+
+<index name="ix_nom_index_fr" table="public.aliments"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="0">
+		<idxelement use-sorting="false">
+			<column name="nom_index_fr"/>
+		</idxelement>
+</index>
+
+<index name="ix_sources_code" table="public.sources"
+	 concurrent="false" unique="false" fast-update="false" buffering="false"
+	 index-type="btree" factor="0">
+		<idxelement use-sorting="false">
+			<column name="code"/>
+		</idxelement>
+</index>
+
+<table name="compositions" layer="0" collapse-mode="2" max-obj-count="7">
+	<schema name="public"/>
+	<position x="700" y="60"/>
+	<column name="teneur" not-null="true">
+		<type name="varchar" length="255"/>
+		<comment><![CDATA[Teneur en décimales]]></comment>
+	</column>
+	<column name="teneur_mini">
+		<type name="varchar" length="255"/>
+		<comment><![CDATA[Teneur minimale]]></comment>
+	</column>
+	<column name="teneur_maxi">
+		<type name="varchar" length="255"/>
+		<comment><![CDATA[teneur maximale]]></comment>
+	</column>
+	<column name="code_confiance">
+		<type name="varchar" length="255"/>
+		<comment><![CDATA[Code confiance de la source]]></comment>
+	</column>
+
+	<customidxs object-type="column">
+		<object name="idx_ali_aliments" index="1"/>
+		<object name="idx_cst_constituants" index="0"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="aliments_fk" index="2"/>
+		<object name="compositions_pk" index="0"/>
+		<object name="constituants_fk" index="1"/>
+	</customidxs>
+</table>
+
+<relationship name="cst_cal" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 src-table="public.constituants"
+	 dst-table="public.compositions"
+	 src-required="true" dst-required="false"
+	 identifier="true"
+>
+	<label ref-type="name-label">
+		<position x="4.67775" y="-5.10156"/>
+	</label>
+</relationship>
+
+<relationship name="ali_cal" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 src-table="public.aliments"
+	 dst-table="public.compositions"
+	 src-required="true" dst-required="false"
+	 identifier="true"
+>
+	<label ref-type="name-label">
+		<position x="-5.51101" y="-4.40156"/>
+	</label>
+</relationship>
+
+<table name="many_compositions_has_many_sources" layer="0" collapse-mode="2" max-obj-count="3">
+	<schema name="public"/>
+	<position x="640" y="380"/>
+</table>
+
+<relationship name="compositions_has_many_many_compositions_has_many_sources" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 src-table="public.compositions"
+	 dst-table="public.many_compositions_has_many_sources"
+	 src-required="true" dst-required="false"
+	 identifier="true"
+/>
+
+<relationship name="sources_has_many_many_compositions_has_many_sources" type="rel1n" layer="0"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 src-table="public.sources"
+	 dst-table="public.many_compositions_has_many_sources"
+	 src-required="true" dst-required="false"
+	 identifier="true"
+/>
+
+</dbmodel>
